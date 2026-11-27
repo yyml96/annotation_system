@@ -16,13 +16,14 @@ A React Admin console for annotation and quality-review work. It covers user, po
 
 ## My contribution
 
-<!-- TODO (Ye Yint): list only the parts you built yourself, for example:
-- Feature or screen:
-- Backend endpoints / models:
-- Other (testing, deployment, documentation):
-Remove this comment before linking the repo from a CV. -->
+I built the **image and video annotation editors** that reviewers use on todo items, and the **restore views** that show the saved annotations:
 
-_To be completed._
+- **Image editor** ([`src/backend/ImageEditor.tsx`](src/backend/ImageEditor.tsx)): draws freehand pen marks over the image on a Konva canvas, with an eraser, a clear button and a remark field. It saves the marks and remark to the API (`POST /backend/api/overlay/imagesave`).
+- **Video editor** ([`src/backend/VideoEditor.tsx`](src/backend/VideoEditor.tsx)): the same drawing tools on a canvas layered over the video player. Each mark records the video time at which it was drawn, and the result is saved through `POST /backend/api/overlay/videosave`.
+- **Image restore view** ([`src/backend/ImageRestore.tsx`](src/backend/ImageRestore.tsx)): loads a post's saved marks and remark (`GET /backend/api/overlay/fetchimage`) and draws them back over the image on the posts page.
+- **Video restore view** ([`src/backend/VideoRestore.tsx`](src/backend/VideoRestore.tsx)): loads the saved video marks (`GET /backend/api/overlay/fetchvideo`) and shows each one as playback reaches the time it was drawn.
+
+Built with React, TypeScript, react-konva and Material UI. The rest of the application was built by other team members.
 
 ## Project structure
 
