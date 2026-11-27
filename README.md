@@ -2,32 +2,91 @@
 
 <img src="assets/portfolio-overview.svg" alt="Annotation workflow console overview" width="100%" />
 
-A React Admin console for annotation and review operations. It includes user, post, todo, audit-log, and settings views, with Firebase email-and-password authentication and role lookup through the PHP API.
+A React Admin console for annotation and quality-review work. It covers user, post, todo, audit-log and settings views, with Firebase email-and-password sign-in and role lookup through a PHP API backed by MongoDB and MySQL.
+
+> **Team project.** This was built with other students. See [My contribution](#my-contribution) for the parts I wrote.
 
 ## Main areas
 
-- **User administration** — browse and manage user records.
-- **Annotation and review content** — create and edit post records and assignment fields.
-- **Workflow support** — todo lists and audit history.
-- **Role-aware access** — the app defines admin, site-builder, and expert-reviewer roles.
+- **User administration**: browse and manage user records.
+- **Annotation and review content**: create and edit post records and their assignment fields.
+- **Image and video tools**: editor and restore views for annotated media (`src/backend/*Editor.tsx`, `*Restore.tsx`).
+- **Workflow support**: todo lists and audit history.
+- **Role-aware access**: admin, site-builder and expert-reviewer roles.
 
-## Run the frontend
+## My contribution
 
-    npm install
-    npm run dev
+<!-- TODO (Ye Yint): list only the parts you built yourself, for example:
+- Feature or screen:
+- Backend endpoints / models:
+- Other (testing, deployment, documentation):
+Remove this comment before linking the repo from a CV. -->
 
-Other available scripts include <code>npm run type-check</code>, <code>npm run build</code>, and <code>npm run serve</code>.
+_To be completed._
 
-## Backend and configuration
+## Project structure
 
-The frontend currently calls a PHP API on local port <code>8098</code>. The repository includes a PHP Dockerfile with MongoDB support; update the Windows-specific volume in <code>docker-compose.yml</code> to your checkout path before using Compose.
+```
+src/                 React Admin frontend (TypeScript, Vite)
+  authProvider.tsx   Firebase sign-in and role lookup
+  users.tsx, posts.tsx, todos.tsx, logs.tsx, settings.tsx
+src/backend/         PHP API (Apache, Composer)
+  public/index.php   entry point
+  src/routes/api.php routes under /backend/api/...
+  src/controllers/   request handlers
+  src/models/        MongoDB / MySQL data access
+  .env.example       configuration template
+DataSimple/          sample JSON data for testing
+Dockerfile, docker-compose.yml   PHP + Apache container with MongoDB extension
+```
 
-Review Firebase and API configuration before deployment. Use environment-specific configuration and keep private credentials out of source control.
+## Getting started
+
+### 1. Backend configuration
+
+Copy the template and fill in your own database details:
+
+```sh
+cp src/backend/.env.example src/backend/.env
+```
+
+The real `.env` file is ignored by Git. Never commit it.
+
+### 2. Run the backend
+
+The repository includes a PHP 8.1 + Apache Dockerfile with the MongoDB extension. Before using Compose, change the Windows-specific `volumes` path in `docker-compose.yml` to your own checkout path, then run:
+
+```sh
+docker compose up --build
+```
+
+The API is then served on `http://localhost:8098/backend/api/`.
+
+### 3. Run the frontend
+
+```sh
+npm install
+npm run dev
+```
+
+Other scripts: `npm run type-check`, `npm run build`, `npm run serve`.
+
+### Firebase
+
+Sign-in uses Firebase Authentication. The web config in `src/authProvider.tsx` and `src/FirebaseAuth.js` points to the original project. To run your own copy, create a Firebase project and replace those values.
+
+### Maintenance script
+
+`addUserIdToUsers.js` is a one-off script that adds IDs to existing user records. It reads the connection string from the environment:
+
+```sh
+MONGODB_URL="<your connection string>" node addUserIdToUsers.js
+```
+
+## Known issues
+
+Open bugs are tracked in [`Bugs.txt`](Bugs.txt), for example assignment updates on posts not saving the `assignedTo` field.
 
 ## Technology
 
-**React Admin** · **TypeScript** · **React** · **Vite** · **Firebase Authentication** · **PHP** · **MongoDB**
-
----
-
-*Portfolio overview based on the source files currently in the repository.*
+**React Admin** · **TypeScript** · **React** · **Vite** · **Firebase Authentication** · **PHP** · **MongoDB** · **MySQL** · **Docker**
