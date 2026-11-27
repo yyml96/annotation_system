@@ -16,14 +16,15 @@ A React Admin console for annotation and quality-review work. It covers user, po
 
 ## My contribution
 
-I built the **image and video annotation editors** that reviewers use on todo items, and the **restore views** that show the saved annotations:
+I built the **image and video annotation editors** that reviewers use on todo items, the **restore views** that show the saved annotations, and the **overlay API** behind them:
 
 - **Image editor** ([`src/backend/ImageEditor.tsx`](src/backend/ImageEditor.tsx)): draws freehand pen marks over the image on a Konva canvas, with an eraser, a clear button and a remark field. It saves the marks and remark to the API (`POST /backend/api/overlay/imagesave`).
 - **Video editor** ([`src/backend/VideoEditor.tsx`](src/backend/VideoEditor.tsx)): the same drawing tools on a canvas layered over the video player. Each mark records the video time at which it was drawn, and the result is saved through `POST /backend/api/overlay/videosave`.
 - **Image restore view** ([`src/backend/ImageRestore.tsx`](src/backend/ImageRestore.tsx)): loads a post's saved marks and remark (`GET /backend/api/overlay/fetchimage`) and draws them back over the image on the posts page.
 - **Video restore view** ([`src/backend/VideoRestore.tsx`](src/backend/VideoRestore.tsx)): loads the saved video marks (`GET /backend/api/overlay/fetchvideo`) and shows each one as playback reaches the time it was drawn.
+- **Overlay API** ([`OverLayDataController.php`](src/backend/src/controllers/OverLayDataController.php), [`OverLayData.php`](src/backend/src/models/OverLayData.php) and the `overlay/*` routes in [`api.php`](src/backend/src/routes/api.php)): PHP endpoints that store image and video annotations (mark coordinates, video time, remark, reviewer and media link per post) in a MySQL `overlay_data` table using PDO prepared statements, and return them for the restore views.
 
-Built with React, TypeScript, react-konva and Material UI. The rest of the application was built by other team members.
+Built with React, TypeScript, react-konva, Material UI, PHP and MySQL. The rest of the application was built by other team members.
 
 ## Project structure
 
