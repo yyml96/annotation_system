@@ -1,7 +1,5 @@
 # Annotation Workflow Console
 
-<img src="assets/portfolio-overview.svg" alt="Annotation workflow console overview" width="100%" />
-
 A React Admin console for annotation and quality-review work. It covers user, post, todo, audit-log and settings views, with Firebase email-and-password sign-in and role lookup through a PHP API backed by MongoDB and MySQL.
 
 > **Team project.** This was built with other students. See [My contribution](#my-contribution) for the parts I wrote.
